@@ -16,5 +16,15 @@ def esercizio1():
    tabella = table.to_html()
    return render_template('risultato.html', tabella = tabella)
 
+@app.route('/esercizio2',methods = ["GET"])
+def esercizio2():
+   import pandas as pd
+   df = pd.read_excel('https://github.com/wtitze/3E/blob/main/BikeStores.xls?raw=true', sheet_name = "products")
+   estremo_minore = int(request.args.get('estremo_minore'))
+   estremo_maggiore = int(request.args.get('estremo_maggiore'))
+   table = df[(df["list_price"] >= estremo_minore) & (df["list_price"] <= estremo_maggiore)].sort_values(by="list_price", ascending = False)
+   tabella = table.to_html()
+   return render_template('risultato2.html', tabella = tabella)
+
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=3245, debug=True)

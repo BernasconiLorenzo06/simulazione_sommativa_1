@@ -26,5 +26,15 @@ def esercizio2():
    tabella = table.to_html()
    return render_template('risultato2.html', tabella = tabella)
 
+
+@app.route('/esercizio3',methods = ["GET"])
+def esercizio3():
+   import pandas as pd
+   df = pd.read_excel('https://github.com/wtitze/3E/blob/main/BikeStores.xls?raw=true', sheet_name = "products")
+   stringa = request.args.get('stringa')
+   table = df[df["product_name"].str.contains(stringa)].sort_values(by="product_name")
+   tabella = table.to_html()
+   return render_template('risultato3.html', tabella = tabella)
+
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=3245, debug=True)
